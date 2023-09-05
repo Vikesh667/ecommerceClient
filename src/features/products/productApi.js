@@ -6,10 +6,18 @@ export function fetchProduct() {
     resolve({ data });
   });
 }
-export function fetchProductsByFilters(filter) {
+export function fetchProductsByFilters(filter,sort) {
   let queryString = "";
   for (let key in filter) {
-    queryString += `${key}=${filter[key]}&`;
+    const categoryValue = filter[key];
+
+    if (categoryValue.length > 0) {
+      const lastCategoryValue = categoryValue[categoryValue.length - 1];
+      queryString += `${key}=${lastCategoryValue}&`;
+    }
+  }
+  for(let key in sort){
+    queryString += `${key}=${sort[key]}&`;
   }
   return new Promise(async (resolve) => {
     const response = await fetch(
