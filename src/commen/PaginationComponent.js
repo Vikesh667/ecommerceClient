@@ -1,55 +1,42 @@
-import React, { useState } from 'react';
-import style from "../styles/Pagination.module.css"
-const PaginationComponent = ({products}) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Number of items per page
-  const totalItems = 30; // Total number of items (replace with your data source)
+import React, { useState } from "react";
+import style from "../styles/Pagination.module.css";
+import { ITEM_PER_PAGE } from "../app/constent";
 
-  // Calculate the total number of pages
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Generate dummy data
-   const dummyData = Array.from({ length: totalItems }, (_, index) => `items ${index + 1}`);
-
-  // Slice the data to display only items for the current page
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-//   const currentData = dummyData.slice(startIndex, endIndex);
-
-  // Function to handle page changes
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+const PaginationComponent = ({
+  handlePage,
+  page,
+  setPage,
+  totalItems,
+}) => {
+  const totalPages = Math.ceil(totalItems / ITEM_PER_PAGE);
 
   return (
     <div className={style.paginationcontainer}>
-      <h1>Pagination Example</h1>
-      {/* <ul className={style.itemlist}>
-        {products.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul> */}
+      <p>
+        Showing <span>{(page - 1) * ITEM_PER_PAGE + 1}</span> to
+        <span>{Math.min(page * ITEM_PER_PAGE, totalItems)}</span> of
+        <span> {totalItems} </span> results
+      </p>
+
       <div className={style.pagination}>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
+        <button onClick={() => handlePage(page - 1)} disabled={page === 1}>
           Previous
         </button>
+
         <ul className={style.paginationlist}>
-          {Array.from({ length: totalPages }).map((_, index) => (
+          {Array.from({ length: totalPages }).map((el, index) => (
             <li
               key={index}
-              onClick={() => handlePageChange(index + 1)}
-              className={currentPage === index + 1 ? 'active' : ''}
+              onClick={() => handlePage(index + 1)}
+              className={page === index + 1 ? style.active : ""}
             >
               {index + 1}
             </li>
           ))}
         </ul>
         <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          onClick={() => handlePage(page + 1)}
+          disabled={page === totalPages}
         >
           Next
         </button>

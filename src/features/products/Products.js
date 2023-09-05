@@ -4,44 +4,45 @@ import {
   fetchProductAsync,
   fetchProductsByFiltersAsync,
   selectAllProducts,
+  selectTotalItems,
 } from "./productSlice";
 import { useEffect, useState } from "react";
 import PaginationComponent from "../../commen/PaginationComponent";
-
+import { ITEM_PER_PAGE } from "../../app/constent";
 export function Product() {
   const filters = [
     {
       id: "category",
       name: "category",
       options: [
-        { "value": "smartphones", "lable": "smartphones", "checked": false },
-        { "value": "laptops", "lable": "laptops", "checked": false },
-        { "value": "fragrances", "lable": "fragrances", "checked": false },
-        { "value": "skincare", "lable": "skincare", "checked": false },
-        { "value": "groceries", "lable": "groceries", "checked": false },
+        { value: "smartphones", lable: "smartphones", checked: false },
+        { value: "laptops", lable: "laptops", checked: false },
+        { value: "fragrances", lable: "fragrances", checked: false },
+        { value: "skincare", lable: "skincare", checked: false },
+        { value: "groceries", lable: "groceries", checked: false },
         {
-          "value": "home-decoration",
-          "lable": "home decoration",
-          "checked": false
+          value: "home-decoration",
+          lable: "home decoration",
+          checked: false,
         },
-        { "value": "furniture", "lable": "furniture", "checked": false },
-        { "value": "tops", "lable": "tops", "checked": false },
-        { "value": "womens-dresses", "lable": "womens dresses", "checked": false },
-        { "value": "womens-shoes", "lable": "womens shoes", "checked": false },
-        { "value": "mens-shirts", "lable": "mens shirts", "checked": false },
-        { "value": "mens-shoes", "lable": "mens shoes", "checked": false },
-        { "value": "mens-watches", "lable": "mens watches", "checked": false },
-        { "value": "womens-watches", "lable": "womens watches", "checked": false },
-        { "value": "womens-bags", "lable": "womens bags", "checked": false },
+        { value: "furniture", lable: "furniture", checked: false },
+        { value: "tops", lable: "tops", checked: false },
+        { value: "womens-dresses", lable: "womens dresses", checked: false },
+        { value: "womens-shoes", lable: "womens shoes", checked: false },
+        { value: "mens-shirts", lable: "mens shirts", checked: false },
+        { value: "mens-shoes", lable: "mens shoes", checked: false },
+        { value: "mens-watches", lable: "mens watches", checked: false },
+        { value: "womens-watches", lable: "womens watches", checked: false },
+        { value: "womens-bags", lable: "womens bags", checked: false },
         {
-          "value": "womens-jewellery",
-          "lable": "womens jewellery",
-          "checked": false
+          value: "womens-jewellery",
+          lable: "womens jewellery",
+          checked: false,
         },
-        { "value": "sunglasses", "lable": "sunglasses", "checked": false },
-        { "value": "automotive", "lable": "automotive", "checked": false },
-        { "value": "motorcycle", "lable": "motorcycle", "checked": false },
-        { "value": "lighting", "lable": "lighting", "checked": false }
+        { value: "sunglasses", lable: "sunglasses", checked: false },
+        { value: "automotive", lable: "automotive", checked: false },
+        { value: "motorcycle", lable: "motorcycle", checked: false },
+        { value: "lighting", lable: "lighting", checked: false },
       ],
     },
     {
@@ -114,9 +115,11 @@ export function Product() {
   ];
 
   const products = useSelector(selectAllProducts);
+  const totalItems = useSelector(selectTotalItems);
   const dispatch = useDispatch();
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
+  const [page, setPage] = useState(1);
   const handleFilter = (e, section, option) => {
     console.log(e.target.checked);
     const newFilter = { ...filter };
@@ -138,9 +141,14 @@ export function Product() {
     const sort = { ...filter, _sort: option.sort, _order: option.order };
     setSort(sort);
   };
+  const handlePage = (page) => {
+    console.log({ page });
+    setPage(page);
+  };
   useEffect(() => {
-    dispatch(fetchProductsByFiltersAsync({ filter, sort }));
-  }, [dispatch, filter, sort]);
+    const pagination = { _page: page, _limit: ITEM_PER_PAGE };
+    dispatch(fetchProductsByFiltersAsync({ filter, sort, pagination }));
+  }, [dispatch, filter, sort, page]);
   const [show, setShow] = useState(null); // Use state to track which category is open
 
   const handleCategory = (categoryIndex) => {
@@ -241,7 +249,12 @@ export function Product() {
         </div>
       </div>
       <div className={style.pagination}>
-        <PaginationComponent />
+        <PaginationComponent
+          handlePage={handlePage}
+          page={page}
+          setPage={setPage}
+          totalItems={totalItems}
+        />
       </div>
     </div>
   );
