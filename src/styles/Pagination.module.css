@@ -1,0 +1,76 @@
+/* PaginationComponent.css */
+
+.paginationcontainer {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+  
+  }
+  
+  .itemlist {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .itemlist li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .pagination button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .paginationlist {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin: 0 10px;
+  }
+  
+  .paginationlist li {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  .paginationlist li.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .paginationlist li:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease;
+  }
+  
