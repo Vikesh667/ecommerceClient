@@ -1,24 +1,10 @@
-/* Global styles */
 
-/* Reset default margin and padding for the whole document */
-body,
-html {
-  margin: 0;
-  padding: 0;
-}
-
-/* Center the content horizontally */
-.center {
-  /* display: flex;
-    justify-content: center;
-    align-items: center; */
-}
-
-/* Main container */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
 /* Dropdown Styles */
 .dropdown {

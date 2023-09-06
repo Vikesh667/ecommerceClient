@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import style from "../../styles/Product.module.css";
+import style from "../../../styles/Product.module.css";
+import { Link } from "react-router-dom";
 import {
   fetchProductAsync,
   fetchProductsByFiltersAsync,
   selectAllProducts,
   selectTotalItems,
-} from "./productSlice";
+} from "../productSlice";
 import { useEffect, useState } from "react";
-import PaginationComponent from "../../commen/PaginationComponent";
-import { ITEM_PER_PAGE } from "../../app/constent";
+import PaginationComponent from "../../../commen/PaginationComponent";
+import { ITEM_PER_PAGE } from "../../../app/constent";
 export function Product() {
   const filters = [
     {
@@ -221,6 +222,7 @@ export function Product() {
             <div className={style.wrapper}>
               {products.map((product) => {
                 return (
+                  <Link to="/productDetails">
                   <div className={style.cart} key={product.id}>
                     <div className={style.productImage}>
                       <img src={product.thumbnail} alt={product.title} />
@@ -242,6 +244,7 @@ export function Product() {
                       </div>
                     </div>
                   </div>
+                  </Link>
                 );
               })}
             </div>

@@ -3,6 +3,7 @@ import style from "../styles/Navbar.module.css";
 import { useSelector } from "react-redux";
 import { selectAllProducts } from "./products/productSlice";
 import { BsFillCartFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 const Navbar = ({ children }) => {
   const selectAllProduct = useSelector(selectAllProducts);
   const [counter, setCounter] = useState(0);
@@ -16,10 +17,10 @@ const Navbar = ({ children }) => {
       </div>
       <ul className={style.menu}>
         <li>
-          <a href="#">
+          <Link to="/cart">
             <BsFillCartFill className={style.BsFillCartFill} />
             <span className={style.counter}>{selectAllProduct.length}</span>
-          </a>
+          </Link>
         </li>
         <li>
           <a href="#">Profile</a>
