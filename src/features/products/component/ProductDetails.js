@@ -1,65 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../../../styles/ProductDetail.module.css"; // Import the CSS Module
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductByIdAsync, selectedProductById } from "../productSlice";
+import { useParams } from "react-router-dom";
 
 const ProductDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const product = useSelector(selectedProductById);
+  const params = useParams();
+  const dispatch = useDispatch();
 
-  const handleImageChange = (index) => {
-    setCurrentImageIndex(index);
+  useEffect(() => {
+    dispatch(fetchProductByIdAsync(params.id));
+  }, [dispatch, params.id]);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
-  const product = [
-    {
-      id: 1,
-      title: "iPhone 9",
-      description: "An apple mobile which is nothing like apple",
-      price: 549,
-      discountPercentage: 12.96,
-      rating: 4.69,
-      stock: 94,
-      brand: "Apple",
-      category: "smartphones",
-      thumbnail: "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-      images: [
-        "https://i.dummyjson.com/data/products/1/1.jpg",
-        "https://i.dummyjson.com/data/products/1/2.jpg",
-        "https://i.dummyjson.com/data/products/1/3.jpg",
-        "https://i.dummyjson.com/data/products/1/4.jpg",
-        "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-      ],
-    },
-  ];
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
     <div className={style.container}>
-      {product.map((image, index) => (
-        <div className={style.productContent}>
-          <div key={index} className={style.images}>
-            {image.images.map((imgr, imgIndex) => (
-              <img
-                key={imgIndex}
-                src={imgr}
-                alt={image.title}
-                className={imgIndex === currentImageIndex ? style.active : ""}
-                onClick={() => handleImageChange(imgIndex)}
-              />
-            ))}
+      {product ? (
+        <div className={style.productinfo}>
+          <div className={style.imageSlider}>
+            <button className={style.sliderButton} onClick={prevImage}>
+              {"<"}
+            </button>
+            <img
+              src={product.images[currentImageIndex]}
+              alt={product.title}
+              className={style.productImage}
+            />
+            <button className={style.sliderButton} onClick={nextImage}>
+              {">"}
+            </button>
           </div>
-          <div className={style.productinfo}>
-            <h2>{image.title}</h2>
-            <p>{image.description}</p>
-            <p>Price: ${image.price}</p>
-            <p>Discount: {image.discountPercentage}%</p>
-            <p>Rating: {image.rating}</p>
-            <p>In Stock: {image.stock} units</p>
-            <p>Brand: {image.brand}</p>
-            <p>Category: {image.category}</p>
-            <div className={style.addToCart}>
-              <button> Add To Cart</button>
-            </div>
+
+          <h2 className={style.productTitle}>{product.title}</h2>
+          <p className={style.productDescription}>{product.description}</p>
+          <div className={style.productDetails}>
+            <p className={style.productPrice}>Price: ${product.price}</p>
+            <p className={style.productDiscount}>
+              Discount: {product.discountPercentage}%
+            </p>
+            <p className={style.productRating}>Rating: {product.rating}</p>
+            <p className={style.productStock}>
+              In Stock: {product.stock} units
+            </p>
+            <p className={style.productBrand}>Brand: {product.brand}</p>
+            <p className={style.productCategory}>
+              Category: {product.category}
+            </p>
+          </div>
+          <div className={style.addToCart}>
+            <button className={style.cartButton}>Add to Cart</button>
           </div>
         </div>
-      ))}
+      ) : null}
     </div>
   );
 };
