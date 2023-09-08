@@ -1,50 +1,54 @@
-import React, { useState } from "react";
-import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 import style from "../../../styles/Login.module.css";
-import { useDispatch } from "react-redux";
-import { useForm } from "react-hooks-useform";
+import { checkUserAsync, selectLoggedInUser } from "../authSlice";
+import { Navigate } from "react-router-dom";
 
-export function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch=useDispatch()
-  const {register,handleSubmit,watch,formState:{errors}}=useForm()
-
-  const handleLogin = () => {
-    
+export  function Login() {
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+ const user=useSelector(selectLoggedInUser)
+  const handleLogin = (data) => {
+    dispatch(checkUserAsync({email:data.email,password:data.password}))
   };
 
   return (
     <div className={style.logincontainer}>
+      {user && <Navigate to='/' replace={true}></Navigate>}
       <div className={style.loginbox}>
         <h2>Login</h2>
-        <div className={style.inputcontainer}>
-          <label htmlFor="email">Email</label>
-          <div className={style.iconContainer}>
-            {/* <HiOutlineMail className={style.icon} /> */}
+        <form noValidate onSubmit={handleSubmit(handleLogin)}>
+          <div className={style.inputcontainer}>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              {...register("email", { required: true })}
+            />
+            {errors.email && (
+              <span className={style.error}>Email is required</span>
+            )}
           </div>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className={style.inputcontainer}>
-          <label htmlFor="password">Password</label>
-          <div className={style.iconContainer}>
-            {/* <HiOutlineLockClosed className={style.icon} /> */}
+          <div className={style.inputcontainer}>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              {...register("password", { required: true })}
+            />
+            {errors.password && (
+              <span className={style.error}>Password is required</span>
+            )}
           </div>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button onClick={handleLogin}>Login</button>
+          <button type="submit">Login</button>
+        </form>
       </div>
     </div>
   );

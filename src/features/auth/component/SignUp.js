@@ -1,12 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import style from "../../../styles/Signup.module.css";
-import { useDispatch } from "react-redux";
-import { createUserAsync } from "../authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserAsync, selectLoggedInUser } from "../authSlice";
 
 export function SignUp() {
   const dispatch=useDispatch()
+  const user=useSelector(selectLoggedInUser)
   const {
     register,
     handleSubmit,
@@ -20,6 +21,8 @@ export function SignUp() {
 
   return (
     <div className={style.signupcontainer}>
+   {user && <Navigate to='/' replace={true}></Navigate>}
+
       <form
         noValidate
         className={style.signupbox}
