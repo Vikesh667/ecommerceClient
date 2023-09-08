@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { selectAllProducts } from "./products/productSlice";
 import { BsFillCartFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { selectItems } from "./cart/cartSlice";
 const Navbar = ({ children }) => {
-  const selectAllProduct = useSelector(selectAllProducts);
-  const [counter, setCounter] = useState(0);
+  const items=useSelector(selectItems)
   return (
     <nav className={style.navbar}>
       <div className={style.logo}>
@@ -17,10 +17,10 @@ const Navbar = ({ children }) => {
       </div>
       <ul className={style.menu}>
         <li>
-          <Link to="/cart">
+         { items.length >0 && <Link to="/cart">
             <BsFillCartFill className={style.BsFillCartFill} />
-            <span className={style.counter}>{selectAllProduct.length}</span>
-          </Link>
+            <span className={style.counter}>{items.length}</span>
+          </Link>}
         </li>
         <li>
           <a href="#">Profile</a>

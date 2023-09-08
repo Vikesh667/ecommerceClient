@@ -3,13 +3,20 @@ import style from "../../../styles/ProductDetail.module.css"; // Import the CSS 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductByIdAsync, selectedProductById } from "../productSlice";
 import { useParams } from "react-router-dom";
+import { addToCartAsync } from "../../cart/cartSlice";
+import { selectLoggedInUser } from "../../auth/authSlice";
 
 const ProductDetail = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const product = useSelector(selectedProductById);
   const params = useParams();
   const dispatch = useDispatch();
+  const user=useSelector(selectLoggedInUser)
 
+  const handleCart=(e)=>{
+    e.preventDefault()
+     dispatch(addToCartAsync({...product,quantity:1,user:user.id}))
+  }
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params.id));
   }, [dispatch, params.id]);
@@ -26,6 +33,7 @@ const ProductDetail = () => {
     );
   };
 
+ 
   return (
     <div className={style.container}>
       {product ? (
@@ -61,7 +69,10 @@ const ProductDetail = () => {
             </p>
           </div>
           <div className={style.addToCart}>
-            <button className={style.cartButton}>Add to Cart</button>
+            <button className={style.cartButton} 
+             onClick={handleCart}
+            >Add to Cart
+            </button>
           </div>
         </div>
       ) : null}
