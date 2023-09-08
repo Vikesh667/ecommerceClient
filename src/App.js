@@ -5,6 +5,7 @@ import SingUpPage from "./pages/SingUpPage";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
+import Protected from "./features/auth/component/Protected";
 const router=createBrowserRouter(
 [
   {
@@ -25,11 +26,11 @@ const router=createBrowserRouter(
   },
   {
     path:"/cart",
-    element:(<CartPage/>)
+    element:(<Protected><CartPage/></Protected>)
   },
   {
     path:"/checkout",
-    element:(<Checkout/>)
+    element:(<Protected><Checkout/></Protected>)
   }
 ]
 )

@@ -48,7 +48,9 @@
       "brand": "Samsung",
       "category": "smartphones",
       "thumbnail": "https://i.dummyjson.com/data/products/3/thumbnail.jpg",
-      "images": ["https://i.dummyjson.com/data/products/3/1.jpg"]
+      "images": [
+        "https://i.dummyjson.com/data/products/3/1.jpg"
+      ]
     },
     {
       "id": 4,
@@ -1426,7 +1428,9 @@
       "brand": "Fashion Jewellery",
       "category": "womens-jewellery",
       "thumbnail": "https://i.dummyjson.com/data/products/78/thumbnail.jpg",
-      "images": ["https://i.dummyjson.com/data/products/78/thumbnail.jpg"]
+      "images": [
+        "https://i.dummyjson.com/data/products/78/thumbnail.jpg"
+      ]
     },
     {
       "id": 79,
@@ -1439,7 +1443,9 @@
       "brand": "Fashion Jewellery",
       "category": "womens-jewellery",
       "thumbnail": "https://i.dummyjson.com/data/products/79/thumbnail.jpg",
-      "images": ["https://i.dummyjson.com/data/products/79/1.jpg"]
+      "images": [
+        "https://i.dummyjson.com/data/products/79/1.jpg"
+      ]
     },
     {
       "id": 80,
@@ -1835,75 +1841,198 @@
     }
   ],
   "categories": [
-    { "value": "smartphones", "lable": "smartphones", "checked": false },
-    { "value": "laptops", "lable": "laptops", "checked": false },
-    { "value": "fragrances", "lable": "fragrances", "checked": false },
-    { "value": "skincare", "lable": "skincare", "checked": false },
-    { "value": "groceries", "lable": "groceries", "checked": false },
+    {
+      "value": "smartphones",
+      "lable": "smartphones",
+      "checked": false
+    },
+    {
+      "value": "laptops",
+      "lable": "laptops",
+      "checked": false
+    },
+    {
+      "value": "fragrances",
+      "lable": "fragrances",
+      "checked": false
+    },
+    {
+      "value": "skincare",
+      "lable": "skincare",
+      "checked": false
+    },
+    {
+      "value": "groceries",
+      "lable": "groceries",
+      "checked": false
+    },
     {
       "value": "home-decoration",
       "lable": "home decoration",
       "checked": false
     },
-    { "value": "furniture", "lable": "furniture", "checked": false },
-    { "value": "tops", "lable": "tops", "checked": false },
-    { "value": "womens-dresses", "lable": "womens dresses", "checked": false },
-    { "value": "womens-shoes", "lable": "womens shoes", "checked": false },
-    { "value": "mens-shirts", "lable": "mens shirts", "checked": false },
-    { "value": "mens-shoes", "lable": "mens shoes", "checked": false },
-    { "value": "mens-watches", "lable": "mens watches", "checked": false },
-    { "value": "womens-watches", "lable": "womens watches", "checked": false },
-    { "value": "womens-bags", "lable": "womens bags", "checked": false },
+    {
+      "value": "furniture",
+      "lable": "furniture",
+      "checked": false
+    },
+    {
+      "value": "tops",
+      "lable": "tops",
+      "checked": false
+    },
+    {
+      "value": "womens-dresses",
+      "lable": "womens dresses",
+      "checked": false
+    },
+    {
+      "value": "womens-shoes",
+      "lable": "womens shoes",
+      "checked": false
+    },
+    {
+      "value": "mens-shirts",
+      "lable": "mens shirts",
+      "checked": false
+    },
+    {
+      "value": "mens-shoes",
+      "lable": "mens shoes",
+      "checked": false
+    },
+    {
+      "value": "mens-watches",
+      "lable": "mens watches",
+      "checked": false
+    },
+    {
+      "value": "womens-watches",
+      "lable": "womens watches",
+      "checked": false
+    },
+    {
+      "value": "womens-bags",
+      "lable": "womens bags",
+      "checked": false
+    },
     {
       "value": "womens-jewellery",
       "lable": "womens jewellery",
       "checked": false
     },
-    { "value": "sunglasses", "lable": "sunglasses", "checked": false },
-    { "value": "automotive", "lable": "automotive", "checked": false },
-    { "value": "motorcycle", "lable": "motorcycle", "checked": false },
-    { "value": "lighting", "lable": "lighting", "checked": false }
+    {
+      "value": "sunglasses",
+      "lable": "sunglasses",
+      "checked": false
+    },
+    {
+      "value": "automotive",
+      "lable": "automotive",
+      "checked": false
+    },
+    {
+      "value": "motorcycle",
+      "lable": "motorcycle",
+      "checked": false
+    },
+    {
+      "value": "lighting",
+      "lable": "lighting",
+      "checked": false
+    }
   ],
-
   "brands": [
-    { "value": "Apple", "lable": "Apple", "checked": false },
-    { "value": "Samsung", "lable": "Samsung", "checked": false },
-    { "value": "OPPO", "lable": "OPPO", "checked": false },
-    { "value": "Huawei", "lable": "Huawei", "checked": false },
+    {
+      "value": "Apple",
+      "lable": "Apple",
+      "checked": false
+    },
+    {
+      "value": "Samsung",
+      "lable": "Samsung",
+      "checked": false
+    },
+    {
+      "value": "OPPO",
+      "lable": "OPPO",
+      "checked": false
+    },
+    {
+      "value": "Huawei",
+      "lable": "Huawei",
+      "checked": false
+    },
     {
       "value": "Microsoft Surface",
       "lable": "Microsoft Surface",
       "checked": false
     },
-    { "value": "Infinix", "lable": "Infinix", "checked": false },
-    { "value": "HP Pavilion", "lable": "HP Pavilion", "checked": false },
+    {
+      "value": "Infinix",
+      "lable": "Infinix",
+      "checked": false
+    },
+    {
+      "value": "HP Pavilion",
+      "lable": "HP Pavilion",
+      "checked": false
+    },
     {
       "value": "Impression of Acqua Di Gio",
       "lable": "Impression of Acqua Di Gio",
       "checked": false
     },
-    { "value": "Royal_Mirage", "lable": "Royal_Mirage", "checked": false },
+    {
+      "value": "Royal_Mirage",
+      "lable": "Royal_Mirage",
+      "checked": false
+    },
     {
       "value": "Fog Scent Xpressio",
       "lable": "Fog Scent Xpressio",
       "checked": false
     },
-    { "value": "Al Munakh", "lable": "Al Munakh", "checked": false },
+    {
+      "value": "Al Munakh",
+      "lable": "Al Munakh",
+      "checked": false
+    },
     {
       "value": "Lord - Al-Rehab",
       "lable": "Lord   Al Rehab",
       "checked": false
     },
-    { "value": "L'Oreal Paris", "lable": "L'Oreal Paris", "checked": false },
-    { "value": "Hemani Tea", "lable": "Hemani Tea", "checked": false },
-    { "value": "Dermive", "lable": "Dermive", "checked": false },
+    {
+      "value": "L'Oreal Paris",
+      "lable": "L'Oreal Paris",
+      "checked": false
+    },
+    {
+      "value": "Hemani Tea",
+      "lable": "Hemani Tea",
+      "checked": false
+    },
+    {
+      "value": "Dermive",
+      "lable": "Dermive",
+      "checked": false
+    },
     {
       "value": "ROREC White Rice",
       "lable": "ROREC White Rice",
       "checked": false
     },
-    { "value": "Fair & Clear", "lable": "Fair & Clear", "checked": false },
-    { "value": "Saaf & Khaas", "lable": "Saaf & Khaas", "checked": false },
+    {
+      "value": "Fair & Clear",
+      "lable": "Fair & Clear",
+      "checked": false
+    },
+    {
+      "value": "Saaf & Khaas",
+      "lable": "Saaf & Khaas",
+      "checked": false
+    },
     {
       "value": "Bake Parlor Big",
       "lable": "Bake Parlor Big",
@@ -1914,12 +2043,47 @@
       "lable": "Baking Food Items",
       "checked": false
     },
-    { "value": "fauji", "lable": "fauji", "checked": false },
-    { "value": "Dry Rose", "lable": "Dry Rose", "checked": false },
-    { "value": "Boho Decor", "lable": "Boho Decor", "checked": false },
-    { "value": "Flying Wooden", "lable": "Flying Wooden", "checked": false },
-    { "value": "LED Lights", "lable": "LED Lights", "checked": false },
-    { "value": "luxury palace", "lable": "luxury palace", "checked": false },
-    { "value": "Golden", "lable": "Golden", "checked": false }
+    {
+      "value": "fauji",
+      "lable": "fauji",
+      "checked": false
+    },
+    {
+      "value": "Dry Rose",
+      "lable": "Dry Rose",
+      "checked": false
+    },
+    {
+      "value": "Boho Decor",
+      "lable": "Boho Decor",
+      "checked": false
+    },
+    {
+      "value": "Flying Wooden",
+      "lable": "Flying Wooden",
+      "checked": false
+    },
+    {
+      "value": "LED Lights",
+      "lable": "LED Lights",
+      "checked": false
+    },
+    {
+      "value": "luxury palace",
+      "lable": "luxury palace",
+      "checked": false
+    },
+    {
+      "value": "Golden",
+      "lable": "Golden",
+      "checked": false
+    }
+  ],
+  "users": [
+    {
+      "email": "a@gmail.com",
+      "password": "ABC@123",
+      "id": 1
+    }
   ]
 }

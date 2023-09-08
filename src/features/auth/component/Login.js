@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { HiOutlineMail, HiOutlineLockClosed } from "react-icons/hi";
 import style from "../../../styles/Login.module.css";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hooks-useform";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch=useDispatch()
+  const {register,handleSubmit,watch,formState:{errors}}=useForm()
 
   const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+    
   };
 
   return (
@@ -21,7 +24,7 @@ export function Login() {
             {/* <HiOutlineMail className={style.icon} /> */}
           </div>
           <input
-            type="text"
+            type="email"
             id="email"
             placeholder="Enter your email"
             value={email}

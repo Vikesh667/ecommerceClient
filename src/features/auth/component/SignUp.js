@@ -1,70 +1,81 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router
-import { HiOutlineMail, HiOutlineUser, HiOutlineLockClosed } from "react-icons/hi";
+import React from "react";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import style from "../../../styles/Signup.module.css";
+import { useDispatch } from "react-redux";
+import { createUserAsync } from "../authSlice";
 
 export function SignUp() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch=useDispatch()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const handleSignup = () => {
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const onSubmit = (data) => {
+     dispatch(createUserAsync({email:data.email,password:data.password}))
   };
 
   return (
     <div className={style.signupcontainer}>
-      <div className={style.signupbox}>
+      <form
+        noValidate
+        className={style.signupbox}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h2>Sign Up</h2>
         <div className={style.inputcontainer}>
-          <label htmlFor="name">Name</label>
-          <div className={style.iconContainer}>
-            {/* <HiOutlineUser className={style.icon} /> */}
-          </div>
-          <input
-            type="text"
-            id="name"
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className={style.inputcontainer}>
           <label htmlFor="email">Email</label>
-          <div className={style.iconContainer}>
-            {/* <HiOutlineMail className={style.icon} /> */}
-          </div>
           <input
-            type="text"
+            type="email"
             id="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register("email", {
+              required: "Email is required!",
+              pattern: {
+                value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                message: "Email is not valid",
+              },
+            })}
           />
+          {errors.email && (
+            <span className={style.error}>{errors.email.message}</span>
+          )}
         </div>
         <div className={style.inputcontainer}>
           <label htmlFor="password">Password</label>
-          <div className={style.iconContainer}>
-            {/* <HiOutlineLockClosed className={style.icon} /> */}
-          </div>
           <input
             type="password"
             id="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            {...register("password", { required: "Password is required!", minLength: 6 })}
           />
+          {errors.password && (
+            <span className={style.error}>{errors.password.message}</span>
+          )}
         </div>
-        <button onClick={handleSignup}>Sign Up</button>
+        <div className={style.inputcontainer}>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            {...register("confirmPassword", {
+              required: " Please confirm password!",
+              validate: (value) => value === watch("password"),
+            })}
+          />
+          {errors.confirmPassword && (
+            <span className={style.error}>{errors.confirmPassword.message}</span>
+          )}
+        </div>
+        <button type="submit">Sign Up</button>
         <p>
           Already have an account?{" "}
           <Link to="/login" className={style.loginLink}>
             Login
           </Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }
