@@ -40,7 +40,7 @@ const Navbar = ({ children }) => {
                 <Link to="/my-account">My Account</Link>
               </li>
               <li>
-                <Link to="/my-orders">My Orders</Link>
+                <Link to="/orders">My Orders</Link>
               </li>
               <li>
                 <Link to="/sign-out">Sign Out</Link>
