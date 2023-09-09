@@ -20,7 +20,8 @@
 
 .firstlastname{
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  width: 100%;
 }
 
 
@@ -240,3 +241,5 @@ li{
   color: #007bff;
   font-size: medium;
 }
+
+

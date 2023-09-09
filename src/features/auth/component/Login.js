@@ -2,11 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import style from "../../../styles/Login.module.css";
-import { checkUserAsync, selectLoggedInUser } from "../authSlice";
+import { checkUserAsync, selectError, selectLoggedInUser } from "../authSlice";
 import { Navigate } from "react-router-dom";
 
 export  function Login() {
   const dispatch = useDispatch();
+  const error=useSelector(selectError)
   const {
     register,
     handleSubmit,

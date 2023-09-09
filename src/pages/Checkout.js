@@ -1,125 +1,162 @@
 import React, { useState } from "react";
 import style from "../styles/Checkout.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteItemFromCartAsync,
+  selectItems,
+  updateItemsAsync,
+} from "../features/cart/cartSlice";
+import { useForm } from "react-hook-form";
+import {
+  selectLoggedInUser,
+  updateUserAsync,
+} from "../features/auth/authSlice";
+import { createOrderAsync, selectCurrentOrder, selectCurrentOrderStatus } from "../features/orders/orderSlice";
 
 const Checkout = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Product 1",
-      price: 25,
-      quantity: 1,
-      image:
-        "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?cs=srgb&dl=pexels-math-90946.jpg&fm=jpg", // Replace with actual image URL
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 30,
-      quantity: 1,
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSxKR-dloNTZ5MJyEBpPuHDvp65Uon-NcUqDj0y9mV&s", // Replace with actual image URL
-    },
-    // Add more items as needed
-  ]);
-  const addresses = [
-    {
-      name: "vikesh kumar",
-      street: "katalpur",
-      city: "Siwan",
-      pinCode: 841439,
-      state: "Bihar",
-      phone: 53535353535,
-    },
-    {
-      name: "Kishan kumar",
-      street: "Gorakh pur",
-      city: "Gorakhpur",
-      pinCode: 841939,
-      state: "Up",
-      phone: 89880808080,
-    },
-  ];
-  const updateQuantity = (id, newQuantity) => {
-    const updatedCartItems = cartItems.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
-    setCartItems(updatedCartItems);
+  const dispatch = useDispatch();
+  const items = useSelector(selectItems);
+  const user = useSelector(selectLoggedInUser);
+  const currentOrder=useSelector(selectCurrentOrder)
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const updateQuantity = (item, increment) => {
+    const updatedItem = {
+      ...item,
+      quantity: item.quantity + (increment ? 1 : -1),
+    };
+    dispatch(updateItemsAsync(updatedItem));
   };
 
   const removeItem = (id) => {
-    const updatedCartItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCartItems);
+    dispatch(deleteItemFromCartAsync(id));
+  };
+  const totalAmount = items.reduce(
+    (amount, item) => item.price * item.quantity + amount,
+    0
+  );
+  const totalItems = items.reduce((total, item) => item.quantity + total, 0);
+
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const handleAddress = (e) => {
+    console.log(e.target.value);
+    setSelectedAddress(user.addresses[e.target.value]);
+  };
+  const handlePayment = (e) => {
+    setPaymentMethod(e.target.value);
   };
 
-  const getTotalPrice = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+  const handleOrder = (e) => {
+    const order = {
+      items,
+      totalAmount,
+      totalItems,
+      user,
+      paymentMethod,
+      selectedAddress,
+      status:"pending"
+    };
+    dispatch(createOrderAsync(order));
   };
   return (
     <div className={style.container}>
-      <form className={style.form}>
+      {!items.length && <Navigate to='/' replace={true}></Navigate>}
+      {currentOrder && <Navigate to={`/order-success/${currentOrder.id}`} replace={true}></Navigate>}
+      <form
+        className={style.form}
+        noValidate
+        onSubmit={handleSubmit((data) => {
+          dispatch(
+            updateUserAsync({ ...user, addresses: [...user.addresses, data] })
+          );
+          reset();
+        })}
+      >
         <p>Personal Information</p>
         <div className={style.firstlastname}>
-          <span>
-            <label htmlFor="first-name">First name</label>
-            <input type="text" id="first-name" name="first-name" />
-          </span>
-          <span>
-            <label htmlFor="last-name">Last name</label>
-            <input type="text" id="last-name" name="last-name" />
-          </span>
+          <label htmlFor="name">Full name</label>
+          <input
+            type="text"
+            id="name"
+            {...register("name", { required: "Name is required" })}
+          />
         </div>
 
         <div className={style.emailfiled}>
           <label htmlFor="email">Email address</label>
-          <input type="email" id="email" name="email" />
-        </div>
-        <div className={style.select}>
-          <label htmlFor="country">Country</label>
-          <select id="country" name="country">
-            <option value="india">India</option>
-            <option value="usa">USA</option>
-            <option value="uk">UK</option>
-            <option value="canada">Canada</option>
-          </select>
+          <input
+            type="email"
+            id="email"
+            {...register("email", { required: "Eamil is required" })}
+          />
         </div>
         <div className={style.street}>
-          <label htmlFor="street-address">Street address</label>
-          <input type="text" id="street-address" name="street-address" />
+          <label htmlFor="street">Phone</label>
+          <input
+            type="tel"
+            id="phone"
+            {...register("phone", { required: "Phone is required" })}
+          />
+        </div>
+        <div className={style.street}>
+          <label htmlFor="street">Street address</label>
+          <input
+            type="text"
+            id="street"
+            {...register("street", { required: "Street is required" })}
+          />
         </div>
         <div className={style.address}>
           <div>
             <label htmlFor="city">City</label>
-            <input type="text" id="city" name="city" />
+            <input
+              type="text"
+              id="city"
+              {...register("city", { required: "City is required" })}
+            />
           </div>
           <div>
             <label htmlFor="state">State</label>
-            <input type="text" id="state" name="state" />
+            <input
+              type="text"
+              id="state"
+              {...register("state", { required: "State is required" })}
+            />
           </div>
           <div>
             <label htmlFor="pincode">Pincode</label>
-            <input type="text" id="pincode" name="pincode" />
+            <input
+              type="text"
+              id="pincode"
+              {...register("pinCode", { required: "Pin-code  is required" })}
+            />
           </div>
         </div>
         <div className={style.save}>
-          <button  className={style.cancel}>Reset</button>
+          <button className={style.cancel}>Reset</button>
           <button>Add Address</button>
         </div>
         <div className={style.addressContainer}>
           <h3>Addresses</h3>
           <p>Choose from Existing addresses</p>
           <ul>
-            {addresses.map((address) => (
-              <li key={address.id}>
+            {user.addresses.map((address, index) => (
+              <li key={index}>
                 <div className={style.vikesh}>
                   <span>
-                  <input type="radio" name="address"/>
+                    <input
+                      onChange={handleAddress}
+                      type="radio"
+                      name="address"
+                      value={index}
+                    />
                   </span>
                   <span>
                     <p>{address.name}</p>
@@ -143,40 +180,53 @@ const Checkout = () => {
             <p>Choose one</p>
           </div>
           <div className={style.paymentOption}>
-            <input type="radio" name="payment-method" value="cash" />
+            <input
+              type="radio"
+              name="paymentmethod"
+              value="cash"
+              onChange={handlePayment}
+              checked={paymentMethod === "cash"}
+            />
             <label>Cash Payment</label>
           </div>
           <div className={style.paymentOption}>
-            <input type="radio" name="payment-method" value="card" />
+            <input
+              type="radio"
+              name="paymentmethod"
+              value="card"
+              onChange={handlePayment}
+              checked={paymentMethod === "card"}
+            />
             <label>Card Payment</label>
           </div>
         </div>
-       
       </form>
       <div className={style.cartcontainer}>
         <h2>Your Cart</h2>
+        {!items.length && <Navigate to="/" replace={true}></Navigate>}
         <div className={style.cartitems}>
-          {cartItems.map((item) => (
+          {items.map((item) => (
             <div key={item.id} className={style.cartitem}>
               <div className={style.productinfo}>
                 <img
-                  src={item.image}
+                  src={item.thumbnail}
                   alt={item.name}
                   className={style.productimage}
                 />
                 <div className={style.productdetails}>
-                  <p>{item.name}</p>
+                  <p>{item.title}</p>
+                  <p>{item.brand}</p>
                   <div className={style.quantity}>
                     <button
                       className={style.quantityButton}
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() => updateQuantity(item, false)}
                     >
                       -
                     </button>
                     <span className={style.quantityValue}>{item.quantity}</span>
                     <button
                       className={style.quantityButton}
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateQuantity(item, true)}
                     >
                       +
                     </button>
@@ -198,12 +248,16 @@ const Checkout = () => {
         <div className={style.total}>
           <div>
             <h4>Subtotal</h4>
+            <h4>Totals item in Cart</h4>
             <p>Shiping and texes calculated and checkeout</p>
           </div>
-          <p>Total: ${getTotalPrice()}</p>
+          <span>
+            <p>${totalAmount}</p>
+            <p>{totalItems} items</p>
+          </span>
         </div>
         <div className={style.checkoutButton}>
-          <button>pay and order</button>
+          <button onClick={handleOrder}>Order now</button>
         </div>
         <p className={style.shoping}>
           <Link to="/">Continue shoping ...</Link>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "../../styles/Cart.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteItemFromCartAsync, selectItems, updateItemsAsync } from "./cartSlice";
 
@@ -21,6 +21,7 @@ export function Cart() {
   return (
     <div className={style.cartcontainer}>
       <h2>Your Cart</h2>
+      {!items.length && <Navigate to="/" replace={true}></Navigate>}
       <div className={style.cartitems}>
         {items.map((item) => (
           <div key={item.id} className={style.cartitem}>
@@ -76,7 +77,9 @@ export function Cart() {
         
       </div>
       <div className={style.checkoutButton}>
-      <button >Checkout</button>
+      <button >
+       <Link to="/checkout">Checkout</Link> 
+        </button>
       </div>
       <p className={style.shoping}>
         <Link to="/">Continue shoping ...</Link>

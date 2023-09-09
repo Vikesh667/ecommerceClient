@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserAsync, selectLoggedInUser } from "../authSlice";
 
 export function SignUp() {
-  const dispatch=useDispatch()
-  const user=useSelector(selectLoggedInUser)
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedInUser);
   const {
     register,
     handleSubmit,
@@ -16,12 +16,18 @@ export function SignUp() {
   } = useForm();
 
   const onSubmit = (data) => {
-     dispatch(createUserAsync({email:data.email,password:data.password}))
+    dispatch(
+      createUserAsync({
+        email: data.email,
+        password: data.password,
+        addresses: [],
+      })
+    );
   };
 
   return (
     <div className={style.signupcontainer}>
-   {user && <Navigate to='/' replace={true}></Navigate>}
+      {user && <Navigate to="/" replace={true}></Navigate>}
 
       <form
         noValidate
@@ -51,7 +57,10 @@ export function SignUp() {
           <input
             type="password"
             id="password"
-            {...register("password", { required: "Password is required!", minLength: 6 })}
+            {...register("password", {
+              required: "Password is required!",
+              minLength: 6,
+            })}
           />
           {errors.password && (
             <span className={style.error}>{errors.password.message}</span>
@@ -68,7 +77,9 @@ export function SignUp() {
             })}
           />
           {errors.confirmPassword && (
-            <span className={style.error}>{errors.confirmPassword.message}</span>
+            <span className={style.error}>
+              {errors.confirmPassword.message}
+            </span>
           )}
         </div>
         <button type="submit">Sign Up</button>
